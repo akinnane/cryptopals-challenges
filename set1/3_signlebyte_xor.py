@@ -60,7 +60,7 @@ def score(string):
     score = 0 
     for char in string.lower():
         try:
-            score += letter_freq.get(str(char), 0)
+            score += letter_freq.get(char, 0)
         except:
             score += 0
     return score
