@@ -227,10 +227,10 @@ def find_keys_for_length(length):
         ''.join(list(x))
         for x in itertools.izip_longest(*slices, fillvalue=chr(0))
     ]
-    key = []
-    for t in transpose:
-        r = decrypt_single_key_xor(t)
-        key.append(r[1])
+    key = [
+        decrypt_single_key_xor(t)[1]
+        for t in transpose
+    ]
     return ''.join([chr(c) for c in key])
 
 
