@@ -136,14 +136,13 @@ def oracle_result(string, secret_size):
 
 
 def guess_last_byte(key, secret_size):
-    d = {}
-    for i in range(0, 255):
-        r = oracle_result(
+    return {
+        oracle_result(
             (key + chr(i)).rjust(secret_size, chr(0)),
             secret_size
-            )
-        d[r] = chr(i)
-    return d
+        ):  chr(i)
+        for i in range(0, 255)
+    }
 
 
 results = [
