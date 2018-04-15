@@ -139,3 +139,58 @@ class ProfileCrypt():
         )
         profile = decode_query(decrypted_query)
         return profile
+
+
+def main():
+    """Vary the length and contents of the email profile parameter to
+    create custom bocks that can then be cut and pasted together to
+    create a new block with 'role=admin'. We create one block ending
+    'role=' and another block starting 'admin' then add them together.
+    We then have to create a third block so that the block starting
+    admin ends with a valid query pair 'key=value' and has valid PKCS7
+    padding for removal.
+
+    :returns: Newly created and profile / cookie
+    :rtype: dict
+
+    """
+    pc = ProfileCrypt()
+
+    # Generate block 'admin&uid=10&rol'
+    profile = profile_for('A' * 10 + 'admin')
+    encrypted_profile = pc.encrypt(profile)
+    admin = encrypted_profile[16:32]
+
+    # Generate block 'AAA&uid=10&role='
+    profile = profile_for('A' * 13)
+    encrypted_profile = pc.encrypt(profile)
+    role = encrypted_profile[16:32]
+
+    # Generate block '=user'
+    profile = profile_for('A' * 14)
+    encrypted_profile = pc.encrypt(profile)
+    padding = encrypted_profile[32:]
+
+    encrypted_profile = encrypted_profile[:16] + role + admin + padding
+
+    for i in range(0, len(encrypted_profile), 16):
+        block = encrypted_profile[i:i+16]
+        logger.debug('block %i: %s' % (
+            i // 16,
+            aes_ecb_decrypt(pc.key, block, unpadder=lambda x: x)
+        ))
+
+    pt = aes_ecb_decrypt(pc.key, encrypted_profile)
+    logger.debug('Decrypted query: %s' % pt)
+
+    decrypted_profile = pc.decrypt(encrypted_profile)
+
+    logger.info('Decrypted profile: ' + str(decrypted_profile))
+    logger.info(
+        'Hex encoded encrypted profile: %s' % encrypted_profile.encode('hex')
+    )
+
+    return encrypted_profile.encode('hex')
+
+if __file__ == '__main__':
+   main()
