@@ -9,7 +9,9 @@ from cryptopals.url import (
     encode_query,
     decode_query
 )
-
+import logging
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('c13_ecb_cut_and_paste')
 """
 # ECB cut-and-paste
 
