@@ -1,5 +1,6 @@
 from challenges.c13_ecb_cut_and_paste import (
     profile_for,
+    encode_profile,
     ProfileCrypt
 )
 from cryptopals.crypto import (
@@ -44,7 +45,7 @@ def test_ProfileCrypt_generates_random_keys():
 def test_ProfileCrypt_encypts_correctly():
     profile = profile_for('foo@bar.com')
     pc1 = ProfileCrypt(profile)
-    e = encode_query(profile)
+    e = encode_profile(profile)
     r = aes_ecb_decrypt(
             pc1.key,
             pc1.encrypt()
@@ -60,3 +61,9 @@ def test_ProfileCrypt_decrypts_correctly():
     )
 
     assert(profile == r)
+
+def test_profile_encoding():
+    profile = profile_for('foo@bar.com')
+    e = 'role=user&email=foo@bar.com&uid=10'
+    r = encode_query(profile)
+    assert(e == r)

@@ -80,6 +80,21 @@ def profile_for(email):
     }
 
 
+def encode_profile(profile):
+    """Encode the profile so the order of the keys is fixed to email, uid, role
+
+    :param profile: The profile to encode
+    :returns: The profile query string
+    :rtype: str
+
+    """
+
+    query = []
+    for i in ['email', 'uid', 'role']:
+        query.append(encode_query({i: profile[i]}))
+    return '&'.join(query)
+
+
 class ProfileCrypt():
     """A class to encrypt object profiles.
     It will generate use the same key for the objects lifespan. """
@@ -103,9 +118,10 @@ class ProfileCrypt():
         :rtype: str
 
         """
+        profile_query = encode_profile(profile if profile else self.profile)
         self.encrypted_profile = aes_ecb_encrypt(
             self.key,
-            encode_query(profile if profile else self.profile)
+            profile_query
         )
         return self.encrypted_profile
 
