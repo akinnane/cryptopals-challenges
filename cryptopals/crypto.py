@@ -18,13 +18,16 @@ def pkcs7_pad(string, blocksize=16):
 
 
 def pkcs7_unpad(string):
-    """Remove the pkcs7 padding from a string
+    """Remove the pkcs7 padding from a string. Raise an error if the
+    padding is not valid.
 
-    :param string: The input string to unpad
+    :param string: The input string to unpad.
     :returns: A string without padding
     :rtype: str
 
     """
+    if len(set(string[-ord(string[-1]):])) != 1:
+        raise ValueError
     return string[:-ord(string[-1])]
 
 
