@@ -1,4 +1,4 @@
-from challenges.c13_ecb_cut_and_paste import (
+from cryptopals.challenges.c13_ecb_cut_and_paste import (
     profile_for,
     encode_profile,
     ProfileCrypt

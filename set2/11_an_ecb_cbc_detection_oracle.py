@@ -28,7 +28,7 @@ should end up with a piece of code that, pointed at a block box that
 might be encrypting ECB or CBC, tells you which one is happening.
 """
 
-oBLOCKSIZE = 16
+BLOCKSIZE = 16
 
 def random_bytes(size):
     return ''.join(
