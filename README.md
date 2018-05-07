@@ -4,8 +4,17 @@ See https://cryptopals.com and https://www.youtube.com/watch?v=iZa_XKpj9X4 for d
 
 ## Setup
 
-Clone the project.
+Clone the project, then from the project dir follow the normal python
+setup.
 
-Install the package in edit mode.
+``` python
+virtualenv venv
+source venv/bin/activate
+pip install -r requirements
+```
 
-`pip install -e .`
+Run the tests:
+
+``` python
+pytest
+```
