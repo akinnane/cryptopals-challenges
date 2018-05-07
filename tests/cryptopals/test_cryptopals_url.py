@@ -47,6 +47,18 @@ def test_encode_query_removes_ambersand():
 
     assert(e == encode_query(i))
 
+
+def test_encode_query_removes_given_characters():
+    i = {
+        'foo': 'bar',
+        'baz': 'qux',
+        'zap': 'zaz-_zle'
+    }
+    e = 'foo=bar&baz=qux&zap=zazzle'
+
+    assert(e == encode_query(i, remove='_-'))
+
+
 def test_encode_query_works_for_ints():
     i = {
         'foo': 'bar',

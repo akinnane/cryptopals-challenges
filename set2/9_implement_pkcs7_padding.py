@@ -21,9 +21,11 @@ of bytes of padding to the end of the block. For instance,
 
 pt = 'YELLOW SUBMARINE'
 
+
 def pkcs7_pad(string, blocksize=20):
     padding = blocksize - (len(string) % blocksize)
     return string + (chr(padding) * padding)
+
 
 print pt.encode('hex')
 print pkcs7_pad(pt).encode('hex')

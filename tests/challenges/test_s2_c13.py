@@ -10,6 +10,7 @@ from cryptopals.url import (
     encode_query
 )
 
+
 def test_profile_for():
     email = 'aaa@bbb.com'
     e = {
@@ -53,6 +54,7 @@ def test_ProfileCrypt_encypts_correctly():
 
     assert(e == r)
 
+
 def test_ProfileCrypt_decrypts_correctly():
     profile = profile_for('foo@bar.com')
     pc1 = ProfileCrypt(profile)
@@ -61,6 +63,7 @@ def test_ProfileCrypt_decrypts_correctly():
     )
 
     assert(profile == r)
+
 
 def test_profile_encoding():
     profile = profile_for('foo@bar.com')

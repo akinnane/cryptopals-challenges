@@ -142,7 +142,18 @@ def aes_cbc_encrypt(key, pt, iv, blocksize=BLOCKSIZE, padder=pkcs7_pad):
     return ''.join(ct)
 
 
-def aes_cbc_decrypt(key, ct, iv, blocksize=BLOCKSIZE, padder=pkcs7_pad):
+def aes_cbc_decrypt(key, ct, iv, blocksize=BLOCKSIZE, unpadder=pkcs7_unpad):
+    """FIXME! briefly describe function
+
+    :param key:
+    :param ct:
+    :param iv:
+    :param blocksize:
+    :param unpadder:
+    :returns:
+    :rtype:
+
+    """
     cipher = Cipher(
         algorithms.AES(key),
         modes.ECB(),
@@ -159,7 +170,7 @@ def aes_cbc_decrypt(key, ct, iv, blocksize=BLOCKSIZE, padder=pkcs7_pad):
             )
         )
         iv = slices[i]
-    return pkcs7_unpad(''.join(pt))
+    return unpadder(''.join(pt))
 
 
 key = 'YELLOW SUBMARINE'

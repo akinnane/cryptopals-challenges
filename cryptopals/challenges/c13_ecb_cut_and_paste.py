@@ -193,4 +193,4 @@ def main():
     return encrypted_profile.encode('hex')
 
 if __file__ == '__main__':
-   main()
+    main()

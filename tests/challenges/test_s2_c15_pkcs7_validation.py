@@ -25,11 +25,11 @@ Crypto nerds know where we're going with this. Bear with us.
 from cryptopals.crypto import pkcs7_unpad
 
 
-
 def test_pkcs7_unpad_works_for_valid_strigs():
     valid_padding = ['ICE ICE BABY' + chr(4) * 4]
     for s in valid_padding:
         assert('ICE ICE BABY' == pkcs7_unpad(s))
+
 
 def test_pkcs7_unpad_raises_ValueError_for_invalid_strigs():
     invalid_padding = [

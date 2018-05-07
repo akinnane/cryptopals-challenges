@@ -41,7 +41,7 @@ def xor(c, k):
     k = (k * -(-len(c) / len(k)))[:len(c)]
     return ''.join(
             chr(ord(a) ^ ord(b))
-            for (a, b) in izip_longest(c, k)
+            for (a, b) in zip(c, k)
     )
 
 

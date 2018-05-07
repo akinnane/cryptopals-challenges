@@ -1,7 +1,9 @@
-"""
-Detect single-character XOR
+from itertools import izip_longest
 
-One of the 60-character strings in this file has been encrypted by single-character XOR.
+"""Detect single-character XOR
+
+One of the 60-character strings in this file has been encrypted by
+single-character XOR.
 
 Find it.
 
@@ -368,7 +370,6 @@ letter_freq = {
     ' ':       17.162,
 }
 
-from itertools import izip_longest
 
 def xor(c, k):
     return ''.join(
@@ -378,7 +379,7 @@ def xor(c, k):
 
 
 def score(string):
-    score = 0 
+    score = 0
     for char in string.lower():
         try:
             score += letter_freq.get(str(char), 0)

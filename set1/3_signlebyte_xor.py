@@ -1,16 +1,19 @@
-"""
-Single-byte XOR cipher
+from itertools import izip_longest
+
+"""Single-byte XOR cipher
 
 The hex encoded string:
 
 1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736
 
-... has been XOR'd against a single character. Find the key, decrypt the message.
+... has been XOR'd against a single character. Find the key, decrypt
+the message.
 
 You can do this by hand. But don't: write code to do it for you.
 
-How? Devise some method for "scoring" a piece of English plaintext. Character frequency is a good metric. Evaluate each output and choose the one with the best score.
-Achievement Unlocked
+How? Devise some method for "scoring" a piece of English
+plaintext. Character frequency is a good metric. Evaluate each output
+and choose the one with the best score.  Achievement Unlocked
 
 You now have our permission to make "ETAOIN SHRDLU" jokes on Twitter.
 
@@ -46,7 +49,6 @@ letter_freq = {
     ' ':       17.162,
 }
 
-from itertools import izip_longest
 
 def xor(c, k):
     return ''.join(
@@ -56,15 +58,16 @@ def xor(c, k):
         ]
     )
 
+
 def score(string):
-    score = 0 
+    score = 0
     for char in string.lower():
         try:
             score += letter_freq.get(char, 0)
         except:
             score += 0
     return score
-    
+
 
 c = '1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736'
 

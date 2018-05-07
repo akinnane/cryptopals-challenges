@@ -1,6 +1,10 @@
 import os
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+
 from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
 """Byte-at-a-time ECB decryption (Simple)
 
 Copy your oracle function to a new function that encrypts buffers
@@ -105,6 +109,7 @@ def aes_ecb_encrypt(key, pt, padder=pkcs7_pad):
         backend=default_backend()
     )
     encryptor = cipher.encryptor()
+    random_bytes
     return encryptor.update(padder(pt)) + encryptor.finalize()
 
 

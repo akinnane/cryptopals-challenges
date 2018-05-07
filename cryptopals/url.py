@@ -18,8 +18,7 @@ def decode_query(query):
     }
 
 
-def encode_query(query):
-    remove = '&='
+def encode_query(query, remove='&='):
     return '&'.join(
         '='.join(
             [

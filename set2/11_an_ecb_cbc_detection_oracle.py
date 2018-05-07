@@ -30,11 +30,13 @@ might be encrypting ECB or CBC, tells you which one is happening.
 
 BLOCKSIZE = 16
 
+
 def random_bytes(size):
     return ''.join(
         chr(c)
         for c in bytearray(os.urandom(size))
     )
+
 
 def random_int(start, end):
     return ord(random_bytes(1)) % (end - start + 1) + start
@@ -122,7 +124,13 @@ def aes_ecb_decrypt(key, pt, unpadder=pkcs7_unpad):
 
 def encryption_oracle(string):
     key = random_bytes(16)
-    pt = random_bytes(random_int(5, 10)) + string + random_bytes(random_int(5, 10))
+
+    pt = random_bytes(
+        random_int(5, 10)
+    ) + string + random_bytes(
+        random_int(5, 10)
+    )
+
     if random_int(0, 1):
         ct = aes_cbc_encrypt(key, pt, iv=random_bytes(16))
     else:
