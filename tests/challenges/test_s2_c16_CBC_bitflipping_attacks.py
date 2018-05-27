@@ -46,7 +46,10 @@ mode have this property?
 """
 from cryptopals.challenges.s2_c16_cbc_bitflipping_attacks import (
     clean_str,
-    sandwich_userdata
+    sandwich_userdata,
+    encrypt_cookie,
+    decrypt_cookie,
+    check_is_admin
 )
 
 
@@ -81,5 +84,51 @@ def test_clean_str_removes_semi_colon():
 
 
 def test_can_encrypt_cookie():
-    """The function should then pad out the input to the 16-byte AES block
+    """The function should pad out the input to the 16-byte AES block
     length and encrypt it under the random AES key."""
+    expected = (
+        'IIh8YdSwD6cJcPBngx/XmZ/F7glpAQJ5bSnAzkJ4vlBB3m7lgLN87ozpN1ObbEKsjgaaj'
+        'ObrrvEe\nQcRnVOBBVmcc6tlpE1n6ELdJlz0OfoVtNjGY96GGF+pcES+GCFIw\n'
+    )
+    encrypted_cookie = encrypt_cookie('userdata1')
+    assert(encrypted_cookie.encode('base64') == expected)
+
+
+def test_can_decrypt_cookie():
+    """Check that we can decrypt the cookies correctly and get the
+    userdata back out."""
+    encrypted_cookie = (
+        'IIh8YdSwD6cJcPBngx/XmZ/F7glpAQJ5bSnAzkJ4vlBB3m7lgLN87ozpN1ObbEKsjgaaj'
+        'ObrrvEe\nQcRnVOBBVmcc6tlpE1n6ELdJlz0OfoVtNjGY96GGF+pcES+GCFIw\n'
+    )
+    expected = (
+        'comment1=cooking%20MCs;'
+        'userdata=userdata1;'
+        'comment2=%20like%20a%20pound%20of%20bacon'
+    )
+    decrypted_cookie = decrypt_cookie(encrypted_cookie.decode('base64'))
+    assert(decrypted_cookie == expected)
+
+
+def test_cookie_check_isadmin_true():
+    """Check if the string ';admin=true; exitst in our cookie/ The user is
+    an admin."""
+    cookie = (
+        'comment1=cooking%20MCs;'
+        'admin=true;'
+        'comment2=%20like%20a%20pound%20of%20bacon'
+    )
+    result = check_is_admin(cookie)
+    assert(result)
+
+
+def test_cookie_check_isadmin_false():
+    """Check if the string ';admin=true; exitst in our cookie/ The user is
+    an admin."""
+    cookie = (
+        'comment1=cooking%20MCs;'
+        'admin=no;'
+        'comment2=%20like%20a%20pound%20of%20bacon'
+    )
+    result = check_is_admin(cookie)
+    assert(not result)
