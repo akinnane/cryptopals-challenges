@@ -1,6 +1,6 @@
 from cryptopals.crypto import (
-    aes_ecb_encrypt,
-    aes_ecb_decrypt
+    aes_cbc_encrypt,
+    aes_cbc_decrypt
 )
 
 
@@ -41,7 +41,7 @@ def encrypt_cookie(userdata, key=None):
     cookie = sandwich_userdata(
         clean_str(userdata)
     )
-    return aes_ecb_encrypt(key, cookie)
+    return aes_cbc_encrypt(key, cookie)
 
 
 def decrypt_cookie(cookie, key=None):
@@ -53,7 +53,7 @@ def decrypt_cookie(cookie, key=None):
     :rtype: str
     """
     key = key if key else 'YELLOW SUBMARINE'
-    return aes_ecb_decrypt(key, cookie)
+    return aes_cbc_decrypt(key, cookie)
 
 
 def check_is_admin(cookie):
