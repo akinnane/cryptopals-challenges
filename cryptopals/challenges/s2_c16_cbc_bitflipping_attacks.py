@@ -39,7 +39,7 @@ def encrypt_cookie(userdata, key=None):
     """
     key = key if key else 'YELLOW SUBMARINE'
     cookie = sandwich_userdata(
-        clean_str(userdata)
+        clean_str(userdata, '=;')
     )
     return aes_cbc_encrypt(key, cookie)
 
