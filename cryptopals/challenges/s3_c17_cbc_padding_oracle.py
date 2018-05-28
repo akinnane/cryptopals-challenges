@@ -85,3 +85,28 @@ class s3_c17_cbc_padding_oracle(object):
 
         """
         return len(set(string[-ord(string[-1]):])) == 1
+
+    def cycle_byte(self, string, byte):
+        """The function will create a generator to cycle through all 256
+        possible values for a byte in a string.
+
+        :param string: The target string to modify
+        :param byte: The byte to cycle over
+        :returns: A python generator
+        :rtype: Iterator
+
+        """
+        for i in range(0, 256):
+            yield (string[:byte] + chr(i) + string[byte+1:], i)
+
+    def padding_attack(self):
+        encrypted = self.encrypt()
+        print(len(encrypted['ct']))
+        print(encrypted['ct'])
+        for ct in self.cycle_byte(encrypted['ct'], 48):
+            valid = self.decrypt_and_validate_padding(
+                encrypted['iv'],
+                ct[0]
+            )
+            if valid:
+                return ct[1]

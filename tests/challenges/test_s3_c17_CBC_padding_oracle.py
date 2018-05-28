@@ -213,3 +213,23 @@ def test_padding_oracle_decrypts_and_validates_bad_padding(padding_oracle):
         iv_ct['ct']
     )
     assert(not result)
+
+
+def test_cycle_byte(padding_oracle):
+    """Test that we can cycle bytes in a string"""
+    string = padding_oracle.cycle_byte('aaa', 1)
+    for i in range(0, 256):
+        ct = next(string)
+        assert(ct[0] == 'a%sa' % chr(i))
+
+
+def test_cycle_byte(padding_oracle):
+    """Test that we can cycle bytes in a string and get the byte back"""
+    string = padding_oracle.cycle_byte('aaa', 1)
+    for i in range(0, 256):
+        ct = next(string)
+        assert(ct[1] == i)
+
+
+def test_padding_attack(padding_oracle):
+    print(padding_oracle.padding_attack())
